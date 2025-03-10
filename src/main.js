@@ -38,6 +38,7 @@ let isConnected = false;
 function setupMultiplayer() {
     // Display connection UI
     const connectionUI = document.createElement('div');
+    connectionUI.id = 'connectionUI';
     connectionUI.style.position = 'fixed';
     connectionUI.style.top = '50%';
     connectionUI.style.left = '50%';
@@ -49,10 +50,59 @@ function setupMultiplayer() {
     connectionUI.style.zIndex = '1000';
     connectionUI.style.fontFamily = 'Arial, sans-serif';
     connectionUI.style.textAlign = 'center';
+    connectionUI.style.minWidth = '350px';
+    
+    // Add close button
+    const closeButton = document.createElement('div');
+    closeButton.textContent = '✕';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '10px';
+    closeButton.style.right = '15px';
+    closeButton.style.cursor = 'pointer';
+    closeButton.style.fontSize = '18px';
+    closeButton.style.fontWeight = 'bold';
+    closeButton.addEventListener('click', () => {
+        document.body.removeChild(connectionUI);
+    });
+    connectionUI.appendChild(closeButton);
     
     const heading = document.createElement('h2');
-    heading.textContent = 'Racing Game Multiplayer';
+    heading.textContent = 'Racing Game';
+    heading.style.marginTop = '5px';
     connectionUI.appendChild(heading);
+    
+    // Game mode selection
+    const modeSelection = document.createElement('div');
+    modeSelection.style.margin = '20px 0';
+    connectionUI.appendChild(modeSelection);
+    
+    // Singleplayer button
+    const singleplayerButton = document.createElement('button');
+    singleplayerButton.textContent = 'Play Singleplayer';
+    singleplayerButton.style.padding = '10px 20px';
+    singleplayerButton.style.backgroundColor = '#4CAF50';
+    singleplayerButton.style.border = 'none';
+    singleplayerButton.style.color = 'white';
+    singleplayerButton.style.cursor = 'pointer';
+    singleplayerButton.style.borderRadius = '4px';
+    singleplayerButton.style.margin = '10px';
+    singleplayerButton.style.fontSize = '16px';
+    singleplayerButton.addEventListener('click', () => {
+        document.body.removeChild(connectionUI);
+    });
+    modeSelection.appendChild(singleplayerButton);
+    
+    // Multiplayer section
+    const multiplayerSection = document.createElement('div');
+    multiplayerSection.style.borderTop = '1px solid rgba(255, 255, 255, 0.3)';
+    multiplayerSection.style.paddingTop = '15px';
+    multiplayerSection.style.marginTop = '10px';
+    connectionUI.appendChild(multiplayerSection);
+    
+    const multiplayerHeading = document.createElement('h3');
+    multiplayerHeading.textContent = 'Multiplayer';
+    multiplayerHeading.style.margin = '5px 0 15px 0';
+    multiplayerSection.appendChild(multiplayerHeading);
     
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
@@ -60,9 +110,11 @@ function setupMultiplayer() {
     nameInput.value = playerInfo.name;
     nameInput.style.display = 'block';
     nameInput.style.margin = '10px auto';
-    nameInput.style.padding = '5px';
-    nameInput.style.width = '200px';
-    connectionUI.appendChild(nameInput);
+    nameInput.style.padding = '8px';
+    nameInput.style.width = '80%';
+    nameInput.style.borderRadius = '4px';
+    nameInput.style.border = '1px solid #ccc';
+    multiplayerSection.appendChild(nameInput);
     
     const serverInput = document.createElement('input');
     serverInput.type = 'text';
@@ -70,26 +122,29 @@ function setupMultiplayer() {
     serverInput.value = 'wss://demos.kaazing.com/echo';
     serverInput.style.display = 'block';
     serverInput.style.margin = '10px auto';
-    serverInput.style.padding = '5px';
-    serverInput.style.width = '300px';
-    connectionUI.appendChild(serverInput);
+    serverInput.style.padding = '8px';
+    serverInput.style.width = '80%';
+    serverInput.style.borderRadius = '4px';
+    serverInput.style.border = '1px solid #ccc';
+    multiplayerSection.appendChild(serverInput);
     
     const connectButton = document.createElement('button');
-    connectButton.textContent = 'Connect';
-    connectButton.style.padding = '8px 20px';
-    connectButton.style.backgroundColor = '#4CAF50';
+    connectButton.textContent = 'Connect to Multiplayer';
+    connectButton.style.padding = '10px 20px';
+    connectButton.style.backgroundColor = '#2196F3';
     connectButton.style.border = 'none';
     connectButton.style.color = 'white';
     connectButton.style.cursor = 'pointer';
     connectButton.style.borderRadius = '4px';
     connectButton.style.margin = '10px auto';
     connectButton.style.display = 'block';
-    connectionUI.appendChild(connectButton);
+    connectButton.style.fontSize = '16px';
+    multiplayerSection.appendChild(connectButton);
     
     const statusText = document.createElement('div');
     statusText.textContent = 'Not connected';
     statusText.style.marginTop = '10px';
-    connectionUI.appendChild(statusText);
+    multiplayerSection.appendChild(statusText);
     
     document.body.appendChild(connectionUI);
     
